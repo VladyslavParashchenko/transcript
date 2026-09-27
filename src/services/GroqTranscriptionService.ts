@@ -98,7 +98,7 @@ export class GroqTranscriptionService implements ITranscriptionService {
       return ''
     }
 
-    const candidateModels = ['llama-3.1-8b-instant', 'llama-3.3-70b-versatile', 'llama3-8b-8192']
+    const candidateModels = ['openai/gpt-oss-20b', 'openai/gpt-oss-120b']
 
     let lastError: Error | null = null
 

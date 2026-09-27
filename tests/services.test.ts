@@ -177,7 +177,7 @@ describe('GroqTranscriptionService', () => {
     expect(headers['Content-Type']).toBe('application/json')
 
     const payload = JSON.parse(capturedOptions?.body as string)
-    expect(payload.model).toBe('llama-3.1-8b-instant')
+    expect(payload.model).toBe('openai/gpt-oss-20b')
     expect(payload.temperature).toBe(0.2)
     expect(payload.messages).toHaveLength(2)
     expect(payload.messages[0].role).toBe('system')
@@ -195,14 +195,14 @@ describe('GroqTranscriptionService', () => {
       const payload = JSON.parse(options?.body as string)
       attemptedModels.push(payload.model)
 
-      if (payload.model === 'llama-3.1-8b-instant') {
+      if (payload.model === 'openai/gpt-oss-20b') {
         return {
           ok: false,
           status: 404,
           json: async () => ({
             error: {
               message:
-                'The model `llama-3.1-8b-instant` does not exist or you do not have access to it.',
+                'The model `openai/gpt-oss-20b` does not exist or you do not have access to it.',
             },
           }),
         } as Response
@@ -224,8 +224,8 @@ describe('GroqTranscriptionService', () => {
 
     const result = await service.correct('текст для резерву')
     expect(result).toBe('Успішний результат через резервну модель.')
-    expect(attemptedModels[0]).toBe('llama-3.1-8b-instant')
-    expect(attemptedModels[1]).toBe('llama-3.3-70b-versatile')
+    expect(attemptedModels[0]).toBe('openai/gpt-oss-20b')
+    expect(attemptedModels[1]).toBe('openai/gpt-oss-120b')
   })
 
   it('throws descriptive error on Groq API failure', async () => {
